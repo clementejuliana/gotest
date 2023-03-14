@@ -1,0 +1,76 @@
+
+LocalStack version: 1.4.1.dev
+LocalStack build date: 2023-02-20
+LocalStack build git hash: 4567080a
+
+Ready.
+Criando tabela no DynamoDB
+{
+    "TableDescription": {
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "id",
+                "AttributeType": "S"
+            },
+            {
+                "AttributeName": "version",
+                "AttributeType": "S"
+            }
+        ],
+        "TableName": "app",
+        "KeySchema": [
+            {
+                "AttributeName": "id",
+                "KeyType": "HASH"
+            },
+            {
+                "AttributeName": "version",
+                "KeyType": "S"
+            }
+        ],
+        "TableStatus": "ACTIVE",
+        "CreationDateTime": 1678819559.828,
+        "ProvisionedThroughput": {
+            "LastIncreaseDateTime": 0.0,
+            "LastDecreaseDateTime": 0.0,
+            "NumberOfDecreasesToday": 0,
+            "ReadCapacityUnits": 0,
+            "WriteCapacityUnits": 0
+        },
+        "TableSizeBytes": 0,
+        "ItemCount": 0,
+        "TableArn": "arn:aws:dynamodb:us-east-1:000000000000:table/app",
+        "TableId": "97c98cf4-e59c-4770-b694-8336dbebd837",
+        "BillingModeSummary": {
+            "BillingMode": "PAY_PER_REQUEST",
+            "LastUpdateToPayPerRequestDateTime": 1678819559.828
+        }
+    }
+}
+Tabela criada!
+Criando funções lambdas
+{
+    "FunctionName": "app",
+    "FunctionArn": "arn:aws:lambda:us-east-1:000000000000:function:app",
+    "Runtime": "go1.x",
+    "Role": "arn:aws:iam::0000000000:role/LambdaFullAccess",
+    "Handler": "main",
+    "CodeSize": 4803681,
+    "Description": "",
+    "Timeout": 3,
+    "LastModified": "2023-03-14T18:46:01.459+0000",
+    "CodeSha256": "/R0LUfzpIOmu3W4f3K1B9IaeX3gyJ5K9GDXwyE3C2Vs=",
+    "Version": "$LATEST",
+    "VpcConfig": {},
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "76ece07a-ead1-415a-9cc5-f90329441538",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ]
+}
+All resources initialized! 🚀

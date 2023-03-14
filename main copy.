@@ -1,0 +1,69 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"log"
+
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+)
+
+type Item struct {
+	Id      string `json:"id"`
+	Version string `json:"Version"`
+}
+
+func apiHandler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	sess, err := session.NewSession(&aws.Config{
+		Region:   aws.String("us-eastd-1"),
+		Endpoint: aws.String("http://localhost:4566"),
+	})
+
+	// Cria uma instância do serviço DynamoDB
+	svc := dynamodb.New(sess)
+
+	// Define o item a ser inserido na tabela
+	item := Item{
+		Id:      "1",
+		Version: "Primeira",
+	}
+
+	// Converte o item em um mapa de atributos do DynamoDB
+	av, err := dynamodbattribute.MarshalMap(item)
+	if err != nil {
+		log.Fatalf("Error marshaling item: %v", err)
+	}
+
+	// Define os parâmetros de inserção de item na tabela
+	input := &dynamodb.PutItemInput{
+		Item:      av,
+		TableName: aws.String("app"),
+	}
+
+	// Insere o item na tabela
+	_, err = svc.PutItem(input)
+	if err != nil {
+		log.Fatalf("Error putting item: %v", err)
+	}
+
+	log.Println("Item inserted successfully")
+	body, err := json.Marshal(map[string]string{"message": "Hello World"})
+	if err != nil {
+		return events.APIGatewayProxyResponse{}, err
+	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: 201,
+		Body:       string(body),
+	}, nil
+}
+
+func main() {
+	lambda.Start(apiHandler)
+
+}
